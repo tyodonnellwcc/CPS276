@@ -10,21 +10,17 @@
 </head>
 <body class="container">
     <form class="row g-3" action="#" method="post">
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">Email</label>
+        <div class="col-md-6">
+    <label for="firstName" class="form-label">First Name</label>
     <input type="email" class="form-control" id="inputEmail4">
   </div>
   <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Password</label>
+    <label for="lastName" class="form-label">Last Name</label>
     <input type="password" class="form-control" id="inputPassword4">
   </div>
   <div class="col-12">
     <label for="inputAddress" class="form-label">Address</label>
     <input type="text" class="form-control" id="inputAddress">
-  </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2">
   </div>
   <div class="col-md-6">
     <label for="inputCity" class="form-label">City</label>
@@ -32,7 +28,7 @@
   </div>
   <div class="col-md-4">
     <label for="inputState" class="form-label">State</label>
-    <select id="inputState" class="form-select" >
+    <select id="inputState" class="form-control" >
         <option>Alabama</option>
         <option>Kentucky</option>
         <option selected>Michigan</option>
@@ -43,6 +39,14 @@
   <div class="col-md-2">
     <label for="inputZip" class="form-label">Zip</label>
     <input type="text" class="form-control" id="inputZip">
+  </div>
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Phone</label>
+    <input type="phoneNumber" class="form-control" id="inputEmail4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Email</label>
+    <input type="email" class="form-control" id="inputPassword4">
   </div>
   <div class="col-12">
     <div class="form-check">
@@ -63,12 +67,6 @@
   <div class="col-12">
     <button type="submit" class="btn btn-primary">Sign in</button>
   </div>
-  <select class="form-select" aria-label="Default select example">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
 </form>
 </body>
 </html>
