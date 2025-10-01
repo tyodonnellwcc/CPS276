@@ -1,6 +1,6 @@
 <?php
-        function addClearNames() {
-    $namesString = "";
+    function addClearNames() {
+        $namesString = "";
     if (isset($_POST['namelist'])) {
         $namesString = trim($_POST['namelist']);
     }
