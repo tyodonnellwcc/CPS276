@@ -29,7 +29,6 @@ $result .= $Calculator->calc(10);
     <title>Calculator</title>
 </head>
 <body class="container">
-    <h1>Calculator Output</h1>
     <main>
 
     <h1>Calculator Output</h1>
