@@ -1,4 +1,6 @@
-
+<?php
+  require_once 'php/fileUploadProc.php';
+?>
 <!doctype html>
 <html lang="en">
   <head>
