@@ -18,7 +18,7 @@
     <div class="container">
     <h1>List Files</h1>
     <p><a href="index.php">Add File</a></li></p>
-          <ul><?php   ?></ul>
+          <ul><?php echo $output; ?></ul>
     </div>
 
   </body>

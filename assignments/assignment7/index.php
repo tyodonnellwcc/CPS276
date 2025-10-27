@@ -19,6 +19,7 @@
         <h1>File Upload</h1>
         <p><a href="listFiles.php">Show File List</a></p>
                 <form method="post" action="index.php" enctype="multipart/form-data">
+        <?php echo $output; ?>
         <div class="form-group">
           <label for="fileName">File Name</label>
           <input type="text" class="form-control" id="fileName" name="fileName" >
