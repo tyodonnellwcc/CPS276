@@ -28,14 +28,28 @@ if (isset($_POST['fileUpload'])) {
         return;
     }
 
-    $uploadPath = "assignment7/files/" . basename($file['name']);
-    if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        $output = "<p class='text-danger'>Error uploading file.</p>";
+    $uploadDir = "/home/t/y/tyodonnell/public_html/cps276/assignments/assignment7/files/";
+    $uploadPath = $uploadDir . basename($file['name']);
+
+    if (file_exists($uploadPath)) {
+        unlink($uploadPath);
+    }
+
+    $fileData = file_get_contents($file['tmp_name']);
+    if ($fileData === false) {
+        $output = "<p class='text-danger'>Unable to read uploaded file.</p>";
         return;
     }
 
+    if (file_put_contents($uploadPath, $fileData) === false) {
+        $output = "<p class='text-danger'>Error saving uploaded file to destination.</p>";
+        return;
+    }
+
+    unlink($file['tmp_name']);
+
     $pdo = new PdoMethods();
-    $sql = "INSERT INTO pdf_files (file_name, file_path) VALUES (:fileName, :filePath)";
+    $sql = "INSERT INTO uploadedfiles (file_name, file_path) VALUES (:fileName, :filePath)";
     $bindings = [
         [':fileName', $fileName, 'str'],
         [':filePath', "files/" . basename($file['name']), 'str']
@@ -46,7 +60,7 @@ if (isset($_POST['fileUpload'])) {
     if ($result === 'noerror') {
         $output = "<p class='text-success'>File successfully uploaded!</p>";
     } else {
-        $output = "<p class='text-danger'>Database error.</p>";
+        $output = "<p class='text-danger'>Database error while saving file info.</p>";
     }
 }
 ?>

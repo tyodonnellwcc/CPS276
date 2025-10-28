@@ -4,7 +4,7 @@ require_once 'classes/PdoMethods.php';
 $output = "";
 
 $pdo = new PdoMethods();
-$sql = "SELECT file_name, file_path FROM pdf_files";
+$sql = "SELECT file_name, file_path FROM uploadedfiles";
 
 $records = $pdo->selectNotBinded($sql);
 
