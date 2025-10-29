@@ -1,3 +1,9 @@
+<?php
+require_once 'classes/Date_time.php';
+$dt = new Date_time();
+$notes = $dt->checkSubmit();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
