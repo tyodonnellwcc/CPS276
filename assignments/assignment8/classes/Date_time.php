@@ -24,16 +24,13 @@ class Date_time {
     private function addNote() {
         $pdo = new PdoMethods();
 
-        // Validate date/time and note fields
         if (empty($_POST['dateTime']) || empty(trim($_POST['note']))) {
             return "<p class='text-danger'>Please enter a date, time, and note.</p>";
         }
 
-        // Convert date/time (from form) to timestamp
         $timestamp = date("Y-m-d H:i:s", strtotime($_POST['dateTime']));
         $note = trim($_POST['note']);
 
-        // Insert into database
         $sql = "INSERT INTO note (date_time, note) VALUES (:date_time, :note)";
         $bindings = [
             [':date_time', $timestamp, 'str'],
@@ -56,7 +53,6 @@ class Date_time {
         return "Both dates are required.";
     }
 
-    // MySQL DATETIME format requires full time — we can append times for range
     $begDate = $_POST['begDate'] . " 00:00:00";
     $endDate = $_POST['endDate'] . " 23:59:59";
 
