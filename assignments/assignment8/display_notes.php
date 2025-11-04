@@ -33,6 +33,7 @@ $notes = $dt->checkSubmit();
         <div class="form-group">
           <input type="submit" name="getNotes"  class="btn btn-primary" value="Get Notes">
         </div>
+        <div><?php echo $notes; ?></div>
       </form>
       <div></div>
     </div>
