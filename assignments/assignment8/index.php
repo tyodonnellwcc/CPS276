@@ -2,7 +2,7 @@
 
 require_once 'classes/Date_time.php';
 $dt = new Date_time();
-$notes = $dt->checkSubmit();
+$output = $dt->checkSubmit();
 ?>
 
 <!doctype html>
@@ -28,7 +28,7 @@ $notes = $dt->checkSubmit();
         <p><a href="display_notes.php">Display Notes</a></p>
         <div></div>
         <form action="index.php" method="post">
-        <?php echo $output; ?>
+        <div><?php echo $output; ?></div>
         <div class="form-group">
           <label for="dateTime">Date and Time</label>
           <input type="datetime-local" class="form-control" id="dateTime" name="dateTime">

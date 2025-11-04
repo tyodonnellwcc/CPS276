@@ -7,19 +7,19 @@ require_once 'classes/Pdo_methods.php';
 class Date_time {
 
     public function checkSubmit() {
-        // Handle Add Note form (index.php)
-        if (isset($_POST['addNote'])) {
-            return $this->addNote();
-        }
+    $output = "";
 
-        // Handle Display Notes form (display_notes.php)
-        if (isset($_POST['getNotes'])) {
-            return $this->getNotes();
-        }
-
-        // Default empty
-        return "";
+    if (isset($_POST['addNote'])) {
+        $output = $this->addNote();
     }
+
+    if (isset($_POST['getNotes'])) {
+        $output = $this->getNotes();
+    }
+
+    return $output;
+    }
+
 
     private function addNote() {
         $pdo = new PdoMethods();
@@ -30,13 +30,13 @@ class Date_time {
         }
 
         // Convert date/time (from form) to timestamp
-        $timestamp = strtotime($_POST['dateTime']);
+        $timestamp = date("Y-m-d H:i:s", strtotime($_POST['dateTime']));
         $note = trim($_POST['note']);
 
         // Insert into database
         $sql = "INSERT INTO note (date_time, note) VALUES (:date_time, :note)";
         $bindings = [
-            [':date_time', $timestamp, 'int'],
+            [':date_time', $timestamp, 'str'],
             [':note', $note, 'str']
         ];
 
@@ -50,40 +50,41 @@ class Date_time {
     }
 
     private function getNotes() {
-        $pdo = new PdoMethods();
+    $pdo = new PdoMethods();
 
-        // Validate date inputs
-        if (empty($_POST['begDate']) || empty($_POST['endDate'])) {
-            return "<p class='text-danger'>No notes found for the date range selected.</p>";
-        }
+    if (empty($_POST['begDate']) || empty($_POST['endDate'])) {
+        return "Both dates are required.";
+    }
 
-        // Convert dates to timestamps for start and end of day
-        $begDate = strtotime($_POST['begDate'] . " 00:00:00");
-        $endDate = strtotime($_POST['endDate'] . " 23:59:59");
+    // MySQL DATETIME format requires full time — we can append times for range
+    $begDate = $_POST['begDate'] . " 00:00:00";
+    $endDate = $_POST['endDate'] . " 23:59:59";
 
-        $sql = "SELECT date_time, note FROM note WHERE date_time BETWEEN :begDate AND :endDate ORDER BY date_time DESC";
-        $bindings = [
-            [':begDate', $begDate, 'int'],
-            [':endDate', $endDate, 'int']
-        ];
+    $sql = "SELECT date_time, note FROM note 
+            WHERE date_time BETWEEN :beg AND :end 
+            ORDER BY date_time DESC";
+    $bindings = [
+        [':beg', $begDate, 'str'],
+        [':end', $endDate, 'str']
+    ];
 
-        $records = $pdo->selectBinded($sql, $bindings);
+    $records = $pdo->selectBinded($sql, $bindings);
 
-        if ($records === 'error' || count($records) === 0) {
-            return "<p class='text-danger'>No notes found for the date range selected.</p>";
-        }
-
-        // Build HTML table
-        $output = "<table class='table table-bordered table-striped'>
-                    <thead><tr><th>Date and Time</th><th>Note</th></tr></thead><tbody>";
-
+    if ($records === 'error') {
+        return "There was an error retrieving the notes.";
+    } elseif (count($records) == 0) {
+        return "No notes found for that date range.";
+    } else {
+        $output = "<table class='table table-striped'>
+            <tr><th>Date and Time</th><th>Note</th></tr>";
         foreach ($records as $row) {
-            $formattedDate = date("m/d/Y h:i A", $row['date_time']);
-            $output .= "<tr><td>{$formattedDate}</td><td>{$row['note']}</td></tr>";
+            $dateFormatted = date("m/d/Y h:i A", strtotime($row['date_time']));
+            $output .= "<tr><td>{$dateFormatted}</td><td>{$row['note']}</td></tr>";
         }
-
-        $output .= "</tbody></table>";
+        $output .= "</table>";
         return $output;
     }
+    }
+
 }
 ?>

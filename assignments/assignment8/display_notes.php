@@ -1,7 +1,7 @@
 <?php
 require_once 'classes/Date_time.php';
 $dt = new Date_time();
-$notes = $dt->checkSubmit();
+$output = $dt->checkSubmit();
 ?>
 
 <!doctype html>
@@ -33,7 +33,7 @@ $notes = $dt->checkSubmit();
         <div class="form-group">
           <input type="submit" name="getNotes"  class="btn btn-primary" value="Get Notes">
         </div>
-        <div><?php echo $notes; ?></div>
+        <div><?php echo $output; ?></div>
       </form>
       <div></div>
     </div>
