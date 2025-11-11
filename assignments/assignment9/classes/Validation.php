@@ -4,12 +4,11 @@ class Validation {
 
     public function checkFormat($value, $type, $customErrorMsg = null) {
         $patterns = [
-            'name'    => '/^[a-z\'\s-]{1,50}$/i',
-            'phone'   => '/^\d{3}\.\d{3}\.\d{4}$/',
-            'address' => '/^[a-zA-Z0-9\s,.\'-]{1,100}$/',
-            'zip'     => '/^\d{5}(-\d{4})?$/',
-            'email'   => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            'none'    => '/.*/'
+            'first_name' => ['regex' => '/^[A-Za-z\s\'-]+$/', 'error' => 'Invalid first name'],
+            'last_name' => ['regex' => '/^[A-Za-z\s\'-]+$/', 'error' => 'Invalid last name'],
+            'email' => ['regex' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/', 'error' => 'Invalid email format'],
+            'password' => ['regex' => '/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', 'error' => 'Password must be 8+ chars, 1 uppercase, 1 number, 1 special']
+
         ];
 
         $pattern = $patterns[$type] ?? '/.*/';
