@@ -13,12 +13,10 @@
 require_once 'classes/Db_conn.php';
 require_once 'classes/Validation.php';
 
-// Initialize sticky values
 $firstName = $lastName = $email = '';
 $errors = [];
 $message = '';
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstName = trim($_POST['firstName']);
     $lastName = trim($_POST['lastName']);
@@ -28,20 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $validator = new Validation();
 
-    // Validate fields
     $validator->checkFormat($firstName, 'first_name');
     $validator->checkFormat($lastName, 'last_name');
     $validator->checkFormat($email, 'email');
     $validator->checkFormat($password1, 'password');
 
-    // Check password confirmation
     if ($password1 !== $password2) {
         $validator->checkFormat('', 'password', 'Passwords do not match.');
     }
 
     $errors = $validator->getErrors();
 
-    // If no errors, insert into database
     if (!$validator->hasErrors()) {
         $hashedPassword = password_hash($password1, PASSWORD_DEFAULT);
 
@@ -49,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = new DatabaseConn();
             $conn = $db->dbOpen();
 
-            // Check for duplicate email
             $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
@@ -67,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $message = "<p class='text-success'>You have been added to the database</p>";
 
-                // Clear sticky values
                 $firstName = $lastName = $email = '';
             }
         } catch (PDOException $e) {
@@ -130,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <?php
-// Display users table
 try {
     if (isset($conn)) {
         $stmt = $conn->query("SELECT first_name, last_name, email, password FROM users");
