@@ -1,150 +1,135 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sticky Form Example</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body>
+<?php
+/* THIS CLASS EXTENDS THE DATABASE CONNECTION CLASS AND BUILD ON IT WITH PDO COMMANDS */
+/* THE DATABASE CONNECTION CLASS IS STORED OUTSIDE OF THE EXAMPLE FILES SO YOU CANNOT SEE THE CONNECTION INFORMATION. ALSO IT IS MORE SECURE*/
+require_once "Db_conn.php";
+class PdoMethods extends DatabaseConn {
 
-<div class="container mt-5">
-<p>&nbsp;</p>    
-<form method="post" action="">
-        <div class="row">
-            <!-- Render first name field -->
-            <div class="col-md-6">
-                <div class="mb-3">
-    <label for="first_name">First Name</label>
-    <input type="text" class="form-control" id="first_name" name="firstName" value="Scott">
-    
-</div>            </div>
+	
+	private $sth;
+	private $conn;
+	private $db;
+	private $error;
 
-            <!-- Render last name field -->
-            <div class="col-md-6">
-                <div class="mb-3">
-    <label for="last_name">Last Name</label>
-    <input type="text" class="form-control" id="last_name" name="lastName" value="Shaper">
-    
-</div>            </div>
-        </div>
 
-        
-        <!-- Render email password password -->
-        <div class="row">
-           
-            <div class="col-md-4">
-                <div class="mb-3">
-    <label for="email">Email</label>
-    <input type="text" class="form-control" id="email" name="email" value="sshaper@wccnet.edu">
-    
-</div>            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-    <label for="password1">Password</label>
-    <input type="text" class="form-control" id="password1" name="password1" value="Pass$or1">
-    
-</div>            </div>
-            <div class="col-md-4">
-                <div class="mb-3">
-    <label for="password2">Confirm Password</label>
-    <input type="text" class="form-control" id="password2" name="password2" value="Pass$or1">
-    
-</div>            </div>
-        </div>
-     
-        <input type="submit" class="btn btn-primary" value="Register">
-    </form>
-        <table class="table table-bordered mt-2">
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Password</th>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>sshaper@wccnet.edu</td>
-            <td>$2y$10$qla5z5ydrGEeUWAf5MahFetNBzxA/i71qa2IMUvCg8pxpNVvRfoVq</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>sshaper1@wccnet.edu</td>
-            <td>$2y$10$/YZgUxbIhWjjgs.NZfjW5OmwG6Uk21US8o7NtRujhVgsdiAVS/.BS</td>
-        </tr><tr>
-            <td>Chase</td>
-            <td>Miller</td>
-            <td>chaumiller@wccnet.edu</td>
-            <td>$2y$10$4Uuc348ZqzYEBYjDI6dOkO2MxadGR147M4ka3GXN9JwzwQkghJUhK</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>bob@wccnet.edu</td>
-            <td>$2y$10$lp1bEBPG2kpwtTuVPuPoH.5Gbsh6SK1L0Uy.b4s6Ta8XIBqxK1Ww2</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td></td>
-            <td>$2y$10$4WZqOYjhCvU2.hlqQUeMTOoFQtzllMCF9j206UWEoEi9BOlVu8muS</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td></td>
-            <td>chmiller@wccnet.edu</td>
-            <td>$2y$10$PKgE9dJYGd.D.VdZ.HPfGuGz1qPCC5X7KKmSG3iShEMe9zitodVEW</td>
-        </tr><tr>
-            <td>Sc</td>
-            <td>Shap</td>
-            <td>sshr@wccnet.edu</td>
-            <td>$2y$10$9KOrGVqCcWewpC0gouLFwuYeCiBpDKkfH3UJxXHYQLi4soqucB8hS</td>
-        </tr><tr>
-            <td>Holly</td>
-            <td>Price</td>
-            <td>holly@gmail.com</td>
-            <td>$2y$10$WNqAp6KQlLNsqbUj/GuGpuul7Io8nEMeaH5rfx4xew0.jPjbv0Gg.</td>
-        </tr><tr>
-            <td>test</td>
-            <td>test</td>
-            <td>test@gmail.com</td>
-            <td>$2y$10$VxrSA3DiVFAeLLG/XtMnxuurS6FwZM/NBEiLVx7BqcZp2wDXrFlva</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>awfage@gmail.com</td>
-            <td>$2y$10$eLZ/vHTvc/g86t/qgzZkgePSC6.aavq0fTXeeu261qbeiG/zErCxK</td>
-        </tr><tr>
-            <td>read</td>
-            <td>comment</td>
-            <td>readcommet@wccnet.edu</td>
-            <td>$2y$10$gCCY5ImeYOswnkR3ZDZlAO1952vTsBgdtnUMntI7IJVue8k/d1rfO</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>sshaper@wccnet.eedu</td>
-            <td>$2y$10$24T7gCwmTykD.b9joR2XseFc6d5azXzvX5m0eEx/MMv3E91Ckr0kq</td>
-        </tr><tr>
-            <td>Scott</td>
-            <td>Shaper</td>
-            <td>sshaper@wccnet.edud</td>
-            <td>$2y$10$GARAVknl9RgybUhRGuRxsutyJDTy6CwhHlyZaUHhm0kTP84CR/.zu</td>
-        </tr><tr>
-            <td>a</td>
-            <td></td>
-            <td>sshaper22@wccnet.edu</td>
-            <td>$2y$10$RwEqdtRrrN2jSKnJ6KlLEe.uD1hfFKSXTsQmwTCp3bf7koyXFoRBa</td>
-        </tr><tr>
-            <td>    </td>
-            <td>test</td>
-            <td>tes32@gmail.com</td>
-            <td>$2y$10$I/HxBB3DwLdMbwdvRXzEEO6oP4T47vCJZlLG7jAcgoYvBXl0F7FjK</td>
-        </tr><tr>
-            <td>Check</td>
-            <td>Testing</td>
-            <td>test@nothingmail.org</td>
-            <td>$2y$10$R92crA5kC4UduHFqz1QaLuCb0QUGNGIWZaH4ijHOotkvZwhBjNYf6</td>
-        </tr><tr>
-            <td>m</td>
-            <td></td>
-            <td>test@nothin3gmail.org</td>
-            <td>$2y$10$GXuEJ15EEPm7koGLtXluCufp2QOukWD1ls8FoCEoU/7KDw5Ae/XDe</td>
-        </tr></table></div>
+	/* THIS METHOD IS FOR ALL SELECT STATEMENTS THAT NEED TO HAVE A BINDING TO PROETECT THE DATA.  THE SCRIPT TAKES THE SQL STATEMENTS AN THE BINDING ARRAY AS ITS PARAMETERS AND PERFORMS THE QUERY.  IT WILL RUN THE QUERY AND RETURN THE RESULT AS AN ASSOCIATIVE ARRAY OR AN ERROR STRING.*/
+	public function selectBinded($sql, $bindings){
+		$this->error = false;
 
-</body>
-</html>
+		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+		/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+		try{
+			$this->db_connection();
+			$this->sth = $this->conn->prepare($sql);
+			$this->createBinding($bindings);
+			$this->sth->execute();
+		}
+		catch(PDOException $e){
+			
+			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+			echo $e->getMessage();
+			return 'error';
+			
+		}
+		
+		//THIS CLOSES THE DATABASE CONNECTION
+		$this->conn = null;
+		
+		//THIS RETURNS A RECORD SET
+		return $this->sth->fetchAll(PDO::FETCH_ASSOC);
+			
+	}
+
+	/* THIS FUNCTION DOES THE SAME AS THE ABOVE BUT DOES NOT NEED ANY BINDED PARAMETERS ARE NO PARAMTERS ARE PASSED */
+	public function selectNotBinded($sql){
+			$this->error = false;
+			
+			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+			/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+			try{
+				$this->db_connection();
+				$this->sth = $this->conn->prepare($sql);
+				$this->sth->execute();
+			}
+			catch (PDOException $e){
+				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+				echo $e->getMessage();
+				return 'error';
+			}
+			
+			//THIS CLOSES THE DATABASE CONNECTION
+			$this->conn = null;
+			
+			//THIS RETURNS THE RECORD SET AS AN ARRAY
+			return $this->sth->fetchAll(PDO::FETCH_ASSOC);
+
+		}
+
+	/* BECAUSE ONLY SELECT QUERIES RETURN A VALUE THE DOES ALL THE REST CREATE, UPDATE, DELETE */
+	public function otherBinded($sql, $bindings){
+		$this->error = false;
+		
+		//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+		
+		/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+		try{
+			$this->db_connection();
+			$this->sth = $this->conn->prepare($sql);
+			$this->createBinding($bindings);
+			$this->sth->execute();
+		}
+		catch(PDOException $e) {
+			//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+			echo $e->getMessage();
+			return 'error';
+		}
+
+		//THIS CLOSES THE DATABASE CONNECTION
+		$this->conn = null;
+
+		//NO ERROR MEANS EVERYTHING WORKED
+		return 'noerror';
+	}
+
+	public function otherNotBinded($sql){
+		$this->error = false;
+			
+			//I CREATE A TRY CATCH BLOCK TO CATCH ANY ERRORS THAT MIGHT ARRISE AND RETURNS AN ERROR MESSAGE.
+
+			/*IMPORTANT!!! IF YOU WANT THE FATAL ERROR TO DISPLAY ON THE WEBPAGE AND NOT THE ERROR MESSAGE THEN COMMENT OUT THE TRY CATCH PART AND JUST RUN THE STATEMENTS WITHIN THE TRY*/
+			try{
+				$this->db_connection();
+				$this->sth = $this->conn->prepare($sql);
+				$this->sth->execute();
+			}
+			catch (PDOException $e){
+				//THIS WILL OUTPUT THE ERROR MESSAGE TO THE BROWSER REMOVE IF IN PRODUCTION
+				echo $e->getMessage();
+				return 'error';
+			}
+			
+			//THIS CLOSES THE DATABASE CONNECTION
+			$this->conn = null;
+			
+			//THIS RETURNS NOERROR IF NO ERRORS
+			return 'noerror';
+
+	}
+
+	/* CREATES A CONNECTION TO THE DATABASE */
+	private function db_connection(){
+		$this->db = new DatabaseConn();
+		$this->conn = $this->db->dbOpen();
+	}
+
+	/* CREATES THE BINDINGS */
+	private function createBinding($bindings){
+		foreach($bindings as $value){
+			switch($value[2]){
+				case "str" : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_STR);
+				case "int" : $this->sth->bindParam($value[0],$value[1], PDO::PARAM_INT);
+			}
+		}
+	}
+}
