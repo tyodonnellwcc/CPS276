@@ -8,13 +8,12 @@ class Validation {
             'last_name' => ['regex' => '/^[A-Za-z\s\'-]+$/', 'error' => 'Invalid last name'],
             'email' => ['regex' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/', 'error' => 'Invalid email format'],
             'password' => ['regex' => '/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', 'error' => 'Password must be 8+ chars, 1 uppercase, 1 number, 1 special']
-
         ];
 
-        $pattern = $patterns[$type] ?? '/.*/';
+        $pattern = $patterns[$type]['regex'] ?? '/.*/';
 
         if (!preg_match($pattern, $value)) {
-            $errorMessage = $customErrorMsg ?? "Invalid $type format.";
+            $errorMessage = $customErrorMsg ?? $patterns[$type]['error'] ?? "Invalid $type format.";
             $this->errors[$type] = $errorMessage;
             return false;
         }
