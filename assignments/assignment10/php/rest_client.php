@@ -9,9 +9,6 @@ function getWeather() {
     $zip = urlencode($_POST["zip_code"]);
     $url = "https://russet-v8.wccnet.edu/~sshaper/assignments/assignment10_rest/get_weather_json.php?zip_code=$zip";
 
-    // --------------------------
-    // cURL REQUEST
-    // --------------------------
     $curl = curl_init();
 
     curl_setopt_array($curl, [
@@ -29,22 +26,14 @@ function getWeather() {
 
     curl_close($curl);
 
-    // Decode JSON
     $data = json_decode($response, true);
 
-    // --------------------------
-    // ERROR RESPONSE CHECK
-    // --------------------------
     if (isset($data["error"])) {
         return ["<p class='alert alert-danger'>{$data['error']}</p>", ""];
     }
 
-    // --------------------------
-    // BUILD OUTPUT
-    // --------------------------
     $out = "";
 
-    // Main city
     $city = $data["searched_city"]["name"];
     $temp = $data["searched_city"]["temperature"];
     $humidity = $data["searched_city"]["humidity"];
@@ -54,16 +43,12 @@ function getWeather() {
     $out .= "<p><strong>Temperature:</strong> $temp<br>";
     $out .= "<strong>Humidity:</strong> $humidity</p>";
 
-    // Forecast
     $out .= "<h4>Three-Day Forecast</h4><ul>";
     foreach ($forecast as $f) {
         $out .= "<li>{$f['day']}: {$f['condition']}</li>";
     }
     $out .= "</ul>";
 
-    // --------------------------
-    // Higher temperatures table
-    // --------------------------
     $higher = $data["higher_temperatures"];
 
     if (count($higher) == 0) {
@@ -81,9 +66,6 @@ function getWeather() {
         $out .= "</table>";
     }
 
-    // --------------------------
-    // Lower temperatures table
-    // --------------------------
     $lower = $data["lower_temperatures"];
 
     if (count($lower) == 0) {
