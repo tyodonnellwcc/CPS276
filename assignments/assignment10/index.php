@@ -3,7 +3,7 @@ $output = "";
 $acknowledgement = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require 'rest_client.php';
+    require 'php/rest_client.php';
     $result = getWeather();
     $acknowledgement = $result[0];
     $output = $result[1];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="container">
     <h1>Enter Zip Code to Get City Weather</h1>
     <?php echo $acknowledgement; ?>
-        <form method="post" action="/~sshaper/assignments/assignment10_rest/solution/index.php" class="form-inline">
+        <form method="post" action="index.php" class="form-inline">
             <div class="form-group mb-2">
                 <label for="zip_code" class="sr-only">Zip Code:</label>
                 <input style="width: 25%;" type="text" class="form-control" id="zip_code" name="zip_code">

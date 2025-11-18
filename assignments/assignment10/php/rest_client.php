@@ -76,8 +76,8 @@ function getWeather() {
         $out .= "<h4>Cities With Lower Temperatures</h4>";
         $out .= "<table class='table table-bordered'><tr><th>City</th><th>Temperature</th></tr>";
 
-        foreach ($lower as $l) {
-            $out .= "<tr><td>{$l['name']}</td><td>{$l['temperature']}</td></tr>";
+        foreach ($lower as $low) {
+            $out .= "<tr><td>{$low['name']}</td><td>{$low['temperature']}</td></tr>";
         }
 
         $out .= "</table>";
